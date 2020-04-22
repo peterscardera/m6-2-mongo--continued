@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { getRowName, getSeatNum } from '../helpers';
-import { range } from '../utils';
+import { getRowName, getSeatNum } from "../helpers";
+import { range } from "../utils";
 
-import Seat from './Seat';
-import { SeatContext } from './SeatContext';
+import Seat from "./Seat";
+import { SeatContext } from "./SeatContext";
 
 function TicketWidget() {
   const {
@@ -17,6 +17,18 @@ function TicketWidget() {
     return <CircularProgress />;
   }
   console.log(hasLoaded, seats, numOfRows, seatsPerRow);
+
+  console.log(seats, 'IM SEATS')
+
+  // fetch("/receive", {
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+  //   method: "POST",
+  //   body: JSON.stringify(seats)
+  // }).then((response) => response.json());
+
   return (
     <Wrapper>
       {range(numOfRows).map((rowIndex) => {
@@ -37,7 +49,7 @@ function TicketWidget() {
                     width={36}
                     height={36}
                     price={seat.price}
-                    status={seat.isBooked ? 'unavailable' : 'available'}
+                    status={seat.isBooked ? "unavailable" : "available"}
                   />
                 </SeatWrapper>
               );

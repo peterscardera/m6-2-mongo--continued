@@ -1,15 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import React from "react";
+import styled from "styled-components";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
-import GlobalStyles from './GlobalStyles';
-import TicketWidget from './TicketWidget';
-import PurchaseModal from './PurchaseModal';
-import { SeatContext } from './SeatContext';
-import { BookingContext } from './BookingContext';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import 'tippy.js/dist/tippy.css';
+import GlobalStyles from "./GlobalStyles";
+import TicketWidget from "./TicketWidget";
+import PurchaseModal from "./PurchaseModal";
+import { SeatContext } from "./SeatContext";
+import { BookingContext } from "./BookingContext";
+
+import "tippy.js/dist/tippy.css";
 
 function App() {
   const {
@@ -21,30 +23,36 @@ function App() {
   } = React.useContext(BookingContext);
 
   React.useEffect(() => {
-    fetch('/api/seat-availability')
-      .then(res => res.json())
+    fetch("/api/seat-availability")
+      .then((res) => res.json())
       .then(receiveSeatInfoFromServer);
   }, [receiveSeatInfoFromServer]);
 
   return (
     <>
-      <GlobalStyles />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <GlobalStyles />
 
-      <Centered>
-        <TicketWidget />
-      </Centered>
+            <Centered>
+              <TicketWidget />
+            </Centered>
 
-      <PurchaseModal />
-      <Snackbar open={status === 'purchased'} severity="success">
-        <Alert
-          severity="success"
-          onClose={clearSnackbar}
-          elevation={6}
-          variant="filled"
-        >
-          Successfully purchased ticket! Enjoy the show.
-        </Alert>
-      </Snackbar>
+            <PurchaseModal />
+            <Snackbar open={status === "purchased"} severity="success">
+              <Alert
+                severity="success"
+                onClose={clearSnackbar}
+                elevation={6}
+                variant="filled"
+              >
+                Successfully purchased ticket! Enjoy the show.
+              </Alert>
+            </Snackbar>
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }

@@ -82,7 +82,7 @@ const PurchaseModal = () => {
           purchaseTicketRequest();
 
           fetch('/api/book-seat', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
